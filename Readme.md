@@ -127,7 +127,8 @@ CROSS includes a separate front-end dashboard (not part of this repository) to v
 ---
 
 **Project Name**: **CROSS**  
-**Author**: Sai Krishna Vishnumolakala, Siddu 
+**Author**: Sai Krishna Vishnumolakala, Siddu
+
 **Contact**: svishnu1@umbc.edu  
 **Version**: 1.0.0  
 
