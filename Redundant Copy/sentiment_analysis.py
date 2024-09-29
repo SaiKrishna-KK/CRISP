@@ -144,3 +144,6 @@ for client_data in client_interactions:
         upsert=True  # Insert the document if it doesn't exist
     )
     print(f"Client {client_entry['client_id']} data inserted/updated in 'dailysentiments' collection.")
+  else:
+      break
+print("Completed Analysis")
