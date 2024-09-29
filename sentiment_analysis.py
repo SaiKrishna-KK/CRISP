@@ -125,8 +125,10 @@ counter = 0
 
 # Analyze interactions and insert each client's output into the `dailysentiments` collection
 for client_data in client_interactions:
-    print(f"Processing client: {client_data['client_id']} - {client_data.get('client_name', 'Unknown')}")
+  if counter <1:
     counter += 1  # Increment counter to keep track of clients processed
+    print(f"Processing client: {client_data['client_id']} - {client_data.get('client_name', 'Unknown')}")
+    
 
     # Prepare the output for each client
     client_entry = {

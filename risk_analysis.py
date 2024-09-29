@@ -134,20 +134,24 @@ def risk_assessment(client_id, daily_changes):
 
 # Process All Clients in the Portfolio Collection
 all_clients = list(portfolio_collection.find({}))
-
+counter = 0
 for client_data in all_clients:
-    client_id = client_data["client_id"]
-    daily_changes = client_data.get("daily_changes", [])
-    
-    # If daily changes are present, perform risk assessment
-    if daily_changes:
-        risk_output = risk_assessment(client_id, daily_changes)
+    if counter <1:
+        counter +=1
+        client_id = client_data["client_id"]
+        daily_changes = client_data.get("daily_changes", [])
         
-        # Save the risk assessment to the `daily_portfolio_risk` collection
-        risk_collection.update_one({"client_id": client_id}, {"$set": risk_output}, upsert=True)
-        
-        print(f"Risk analysis completed for {client_id}.")
+        # If daily changes are present, perform risk assessment
+        if daily_changes:
+            risk_output = risk_assessment(client_id, daily_changes)
+            
+            # Save the risk assessment to the `daily_portfolio_risk` collection
+            risk_collection.update_one({"client_id": client_id}, {"$set": risk_output}, upsert=True)
+            
+            print(f"Risk analysis completed for {client_id}.")
+        else:
+            print(f"No daily changes found for {client_id}. Skipping...")
     else:
-        print(f"No daily changes found for {client_id}. Skipping...")
+        break
 
-print("Risk analysis completed for all clients.")
+print("Risk analysis completed!")

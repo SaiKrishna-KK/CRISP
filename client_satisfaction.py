@@ -130,37 +130,40 @@ def update_client_satisfaction():
     """Update the client_satisfaction table with overall satisfaction scores."""
     # Get all client IDs from the daily_risk collection
     clients = list(risk_collection.find({}))
-
+    counter = 0
     for client_data in clients:
-        
-        client_id = client_data["client_id"]
+        if counter <1:
+            counter +=1
+            client_id = client_data["client_id"]
 
-        print(f"\nProcessing Client: {client_id}")
+            print(f"\nProcessing Client: {client_id}")
 
-        # Retrieve the latest risk data for the client
-        risk_data = risk_collection.find_one({"client_id": client_id})
-        print(f"Risk Data for {client_id}: {risk_data}")
+            # Retrieve the latest risk data for the client
+            risk_data = risk_collection.find_one({"client_id": client_id})
+            print(f"Risk Data for {client_id}: {risk_data}")
 
-        # Retrieve the latest sentiment data for the client
-        sentiment_data = sentiment_collection.find_one({"client_id": client_id})
-        print(f"Sentiment Data for {client_id}: {sentiment_data}")
+            # Retrieve the latest sentiment data for the client
+            sentiment_data = sentiment_collection.find_one({"client_id": client_id})
+            print(f"Sentiment Data for {client_id}: {sentiment_data}")
 
-        if risk_data and sentiment_data:
-            # Use 'daily_sentiments' to pass the sentiment data structure
-            client_name = sentiment_data.get("client_name", "Unknown Client")
-            satisfaction_result = analyze_overall_satisfaction(client_id, client_name, risk_data["risk_analysis"], sentiment_data["daily_sentiments"])
+            if risk_data and sentiment_data:
+                # Use 'daily_sentiments' to pass the sentiment data structure
+                client_name = sentiment_data.get("client_name", "Unknown Client")
+                satisfaction_result = analyze_overall_satisfaction(client_id, client_name, risk_data["risk_analysis"], sentiment_data["daily_sentiments"])
 
-            # Store the satisfaction result in the client_satisfaction collection
-            satisfaction_collection.update_one(
-                {"client_id": client_id}, 
-                {"$set": satisfaction_result}, 
-                upsert=True
-            )
-            print(f"Client satisfaction updated for {client_id}.")
+                # Store the satisfaction result in the client_satisfaction collection
+                satisfaction_collection.update_one(
+                    {"client_id": client_id}, 
+                    {"$set": satisfaction_result}, 
+                    upsert=True
+                )
+                print(f"Client satisfaction updated for {client_id}.")
+            else:
+                print(f"Risk or sentiment data missing for {client_id}. Skipping...")
         else:
-            print(f"Risk or sentiment data missing for {client_id}. Skipping...")
+            break
 
-    print("Overall satisfaction update completed for all clients.")
+    print("Overall satisfaction update completed.")
 
 # Run the client satisfaction update function
 update_client_satisfaction()
