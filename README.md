@@ -1,19 +1,20 @@
-# CROSS: Client Risk, Sentiment Analysis, and Satisfaction Optimization
+# **CRISP: Client Relationship Insight & Sentiment Performance**
 
 ## Project Overview
-**CROSS** is a financial services analysis platform that leverages Natural Language Processing (NLP) and Machine Learning to evaluate daily interactions and portfolios of clients, providing a comprehensive **Client Satisfaction Score**. This platform is designed to empower financial advisors and portfolio managers with deep insights into client sentiment, portfolio performance, and overall satisfaction, enabling them to identify potential risks, improve engagement, and ultimately increase client retention.
+**CRISP** is a comprehensive client management platform tailored for hedge funds and financial institutions. It leverages Natural Language Processing (NLP) and Machine Learning to evaluate daily interactions and portfolio data, ultimately delivering a unified **Client Relationship Insight & Sentiment Performance (CRISP)** score. The CRISP score enables portfolio managers and advisors to gain deeper insights into client sentiment, manage portfolio risks, and optimize overall satisfaction, ensuring that high-value clients remain engaged and satisfied.
 
-### Problem Statement:
-Managing client satisfaction is a complex task for financial service firms. To ensure continued engagement, firms must track not only the performance of client portfolios but also monitor and analyze daily communications, such as emails, phone calls, and chats. A disjointed view of these elements can lead to a poor understanding of a client’s true satisfaction and result in overlooked risks. **CROSS** bridges this gap by integrating sentiment and risk analysis to provide a holistic view of each client’s status.
+### Why **CRISP**?
+The **CRISP** platform is built to address the challenges hedge funds face in managing complex client relationships. Financial institutions need clear, actionable insights to proactively manage client satisfaction and engagement. By combining sentiment analysis, risk management, and satisfaction scoring, CRISP acts as a single source of truth for understanding and optimizing client relationships.
 
-### Key Features:
-- **Sentiment Analysis**: Automatically analyzes and categorizes daily communications to gauge client sentiment.
-- **Risk Analysis**: Evaluates daily changes in client portfolios to compute risk levels and identify performance trends.
-- **Client Satisfaction Scoring**: Integrates sentiment and risk scores to generate an overall satisfaction score, identifying high-priority clients who may require immediate attention.
-- **Dashboard Visualization**: Displays all analysis results on a user-friendly dashboard (not included in this repository) for quick and intuitive access.
+## Key Features of **CRISP**:
+- **Client Sentiment Analysis**: Automatically classifies daily client interactions into positive, neutral, or negative sentiment categories, offering a granular view of client sentiment trends.
+- **Risk Assessment**: Analyzes daily portfolio performance and computes a risk score, highlighting portfolios that may be at risk of underperformance.
+- **Unified CRISP Score**: Integrates sentiment and risk data to generate a single score that reflects the health of the client relationship.
+- **Proactive Client Engagement**: Identifies high-priority clients who may require immediate attention to prevent disengagement or churn.
+- **Dashboard Visualization**: Displays all analysis results in a user-friendly dashboard (not included in this repository) for quick and intuitive access.
 
-## Components of CROSS:
-The project is divided into three main scripts, each handling a specific aspect of the analysis pipeline:
+## Components of CRISP:
+The project is divided into four main scripts, each handling a specific part of the analysis pipeline:
 
 1. **Sentiment Analysis (`sentiment_analysis.py`)**:
    - Analyzes daily client communications (emails, phone call notes, and chat logs) using OpenAI's GPT model.
@@ -30,8 +31,8 @@ The project is divided into three main scripts, each handling a specific aspect 
 4. **Main Execution Script (`main.py`)**:
    - Runs the entire pipeline by sequentially executing the three scripts.
 
-### Data Flow and Architecture
-The application is built using a modular approach, with separate MongoDB collections for storing intermediate and final results:
+## Data Flow and Architecture
+The application uses a modular approach, with separate MongoDB collections for storing intermediate and final results:
 
 1. **`clientInteraction`**: Stores raw client interactions data (emails, chats, phone call notes).
 2. **`dailysentiments`**: Stores daily sentiment scores and summaries for each client.
@@ -39,32 +40,19 @@ The application is built using a modular approach, with separate MongoDB collect
 4. **`dailyrisks`**: Stores daily risk analysis and performance trends for each client portfolio.
 5. **`clientSatisfaction`**: Final output collection storing the overall satisfaction levels, scores, and reasons.
 
-### How CROSS Works:
-1. **Sentiment Analysis**:
-   - Reads data from the `clientInteraction` collection.
-   - Uses OpenAI's GPT to classify the sentiment of each daily interaction and generates a daily sentiment summary.
-   - Stores the results in the `dailysentiments` collection.
+## Setup and Execution:
 
-2. **Risk Analysis**:
-   - Reads portfolio data from the `portfolios` collection.
-   - Computes risk scores based on daily volatility and profit/loss trends.
-   - Stores the results in the `dailyrisks` collection.
-
-3. **Client Satisfaction Analysis**:
-   - Integrates data from both `dailysentiments` and `dailyrisks` collections.
-   - Uses OpenAI’s GPT to produce a final client satisfaction score.
-   - Stores the satisfaction results in the `clientSatisfaction` collection.
-
-## Prerequisites:
+### Prerequisites:
 - **Python**: 3.8+
 - **MongoDB Atlas** (or local MongoDB setup)
 - **OpenAI API Key** for GPT models.
 
-## Setup Guide:
+### Setup Guide:
+
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-repository/CROSS.git
-   cd CROSS
+   git clone https://github.com/your-repository/CRISP.git
+   cd CRISP
    ```
 
 2. **Install the Required Dependencies**:
@@ -94,20 +82,29 @@ The application is built using a modular approach, with separate MongoDB collect
 
 ## Script Descriptions:
 
-### `main.py`
+### 1. **`main.py`**
 Runs all the scripts in the required order and handles any errors during execution.
 
-### `sentiment_analysis.py`
+### 2. **`sentiment_analysis.py`**
 Generates daily sentiment analysis based on client interactions.
 
-### `risk_analysis.py`
+- **Input**: Data from the `clientInteraction` collection.
+- **Output**: Sentiment summary stored in `dailysentiments`.
+
+### 3. **`risk_analysis.py`**
 Analyzes portfolio risk based on daily changes and performance trends.
 
-### `client_satisfaction.py`
+- **Input**: Data from the `portfolios` collection.
+- **Output**: Risk scores and levels stored in `dailyrisks`.
+
+### 4. **`client_satisfaction.py`**
 Integrates daily sentiment and risk data to produce the final client satisfaction score.
 
-## Dashboard Integration:
-CROSS includes a separate front-end dashboard (not part of this repository) to visualize the sentiment, risk, and satisfaction data for each client.
+- **Input**: Data from `dailysentiments` and `dailyrisks`.
+- **Output**: Satisfaction levels and scores stored in `clientSatisfaction`.
+
+## Dashboard Visualization:
+The platform is designed to integrate with a user-friendly dashboard that visualizes the CRISP score, sentiment trends, and risk levels for each client (not included in this repository).
 
 ## Future Enhancements:
 1. **Expand Portfolio Data**: Add more assets and performance metrics.
@@ -126,11 +123,9 @@ CROSS includes a separate front-end dashboard (not part of this repository) to v
 
 ---
 
-**Project Name**: **CROSS**  
-**Author**: Sai Krishna Vishnumolakala, Siddu
-
+**Project Name**: **CRISP**  
+**Author**: Sai Krishna Vishnumolakala, Siddu  
 **Contact**: svishnu1@umbc.edu  
 **Version**: 1.0.0  
 
 ---
-
